@@ -24,7 +24,7 @@ This project represents a complete solution for stereo-based perception in robot
 2. **Depth Estimation**: Real-time computation of depth maps from stereo image feeds, critical for robotic depth perception.
 3. **Stereo Visual Odometry (SVO)**: Position and orientation estimation based on feature matching in stereo images, essential for localization and navigation.
 
-### Technical Contributions
+## Technical Contributions
 
 ### 1. Development of a ROS-integrated Camera Calibration Node
 
