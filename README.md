@@ -95,7 +95,7 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
 - **Pose Estimation**: The camera's position and orientation are estimated using the PnP (Perspective-n-Point) algorithm with RANSAC. PnP is used for its ability to estimate the pose of the camera from 3D-2D point correspondences.
 
     **Method**:
-    - USe the 3D points obtained from the traingulation and their corresponding 2D image points.
+    - Use the 3D points obtained from the traingulation and their corresponding 2D image points.
     - Apply the PnP algorithm to estimate the camera pose.
     - Compute the new transformation matrix and extract the position and orientation.
 
