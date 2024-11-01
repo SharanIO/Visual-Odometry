@@ -51,7 +51,7 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
 - **Feature Detection**: Key points in the images are detected using the ORB (Oriented FAST and Rotated BRIEF) algorithm. ORB is chosen for its efficiency and robustness in detecting and describing key points, making it suitable for real-time applications.
 
     **Method**:
-    
+
       - Convert the image to grayscale.
       - Use the ORB detector to find key points and compute their descriptors.
 
@@ -60,7 +60,6 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
             orb = cv2.ORB_create()
             kp, des = orb.detectAndCompute(img, None)
             return kp, des
-        ```
 
 - **Feature Matching**: Features between consecutive frames are matched using the BFMatcher (Brute Force Matcher) with Hamming distance and cross-checking. BFMatcher is selected for its simplicity and effectiveness in matching binary descriptors like those produced by ORB.
 - **Triangulation**: The 3D positions of matched features are estimated using triangulation. This step is crucial for determining the spatial coordinates of the features in the scene.
