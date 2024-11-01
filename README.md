@@ -1,60 +1,62 @@
-# 📷 Stereo Visual Odometry 🚀
+# Stereo Visual Odometry
 
-This project demonstrates a **Stereo Visual Odometry** system built with ROS, combining **camera calibration**, **depth estimation**, and **odometry calculation** to enable precise perception and navigation capabilities. It’s designed to highlight my expertise in robotics software, especially in real-time perception and data processing.
+Stereo Visual Odometry (SVO) is a computer vision project that estimates the motion of a camera through 3D space by analyzing the sequence of images from stereo camera inputs. This project is designed to be modular, efficient, and capable of working with different stereo datasets.
 
----
+## Table of Contents
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Project Structure](#project-structure)
+- [Datasets](#datasets)
+- [Contributing](#contributing)
+- [License](#license)
 
-## 🛠️ Skills Used
+## About the Project
 
-| **Skill Areas**        | **Tools & Frameworks** |
-|------------------------|------------------------|
-| **ROS Programming**    | ROS Noetic, ROS Bags   |
-| **Computer Vision**    | OpenCV, Depth Estimation |
-| **Image Processing**   | Stereo Matching        |
-| **Odometry**           | RViz Visualization     |
-| **Data Management**    | Camera Calibration     |
-| **Real-Time Systems**  | ROS Nodes and Topics   |
+This project implements a Stereo Visual Odometry pipeline using stereo image sequences to estimate the position and orientation of a moving camera over time. The goal of the project is to provide an accurate and real-time solution for visual odometry using standard stereo datasets. It serves as a building block for applications in SLAM (Simultaneous Localization and Mapping) and autonomous navigation.
 
-This project serves as a foundation for more complex applications like autonomous navigation, robotic manipulation, and 3D mapping, all essential to real-world robotics. It showcases my ability to build robust, modular systems—a skill set directly applicable to robotics software engineering roles.
+### Key Objectives
+- Real-time estimation of camera position and orientation.
+- Flexibility to work with various stereo camera configurations.
+- Modular and extensible architecture for testing and improving algorithms.
 
----
+## Features
 
-## 📖 Project Overview
+- **Feature Detection**: Detects features in stereo images using algorithms like ORB, SIFT, or SURF.
+- **Feature Matching**: Matches features between consecutive frames to estimate motion.
+- **Pose Estimation**: Calculates the camera’s position and orientation from matched features.
+- **Scale Recovery**: Uses stereo information to estimate scale in real-world measurements.
+- **Visualization**: Displays the trajectory and keyframes of the estimated motion path.
 
-Stereo visual odometry estimates a camera-equipped robot’s position and orientation by analyzing stereo image pairs. By deriving depth from stereo images, we can compute incremental motion over time, allowing the robot to navigate and interact in dynamic environments. This README details the technical breakdown of the project's three main components:
+## Installation
 
----
+### Prerequisites
 
-### ⚙️ Components
+- Python 3.x
+- OpenCV
+- NumPy
+- Matplotlib
+- [Dataset](#datasets)
 
-1. **Camera Calibration**
-   - **Purpose**: Captures intrinsic and extrinsic camera parameters using a checkerboard pattern to correct image alignment.
-   - **Published Topic**: `/camera_calibration`
-   - **Command**:
-     ```bash
-     roslaunch your_package_name camera_calibration.launch
-     ```
+### Setup
 
-2. **Depth Estimation**
-   - **Purpose**: Converts stereo images into depth data, providing valuable 3D information for robot perception.
-   - **Published Topic**: `/depth_estimation`
-   - **Command**:
-     ```bash
-     roslaunch your_package_name depth_estimation.launch
-     ```
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/stereo-visual-odometry.git
+    cd stereo-visual-odometry
+    ```
 
-3. **Stereo Visual Odometry**
-   - **Purpose**: Computes the robot's motion by analyzing depth and motion cues from stereo frames.
-   - **Published Topic**: `/odometry_data`
-   - **Visualization**: RViz (with additional ROS bag replay for robustness testing)
-   - **Command**:
-     ```bash
-     roslaunch your_package_name stereo_visual_odometry.launch
-     ```
+2. **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Each component publishes data as ROS topics, supporting real-time processing and enabling integration with other robotic systems for a seamless operational workflow.
+## Usage
 
----
+### Running the Main Script
 
-## 📂 Project Structure
-
+To run the visual odometry pipeline, use the following command:
+```bash
+python main.py --dataset_path /path/to/dataset
