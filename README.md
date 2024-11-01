@@ -55,7 +55,7 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
     - Use the ORB detector to find key points and compute their descriptors.
 
 
-    ```bash
+    ```python
     def detect_features(self, img):
         orb = cv2.ORB_create()
         kp, des = orb.detectAndCompute(img, None)
@@ -79,7 +79,37 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
     ```
 
 - **Triangulation**: The 3D positions of matched features are estimated using triangulation. This step is crucial for determining the spatial coordinates of the features in the scene.
+
+    **Method**:
+    - USe the matched key points from the left and right images.
+    - Apply the triangulation method to compute the 3D coordinates.
+
+    ```python
+    def compute_odometry(self, pts1, pts2):
+        in1 = np.array([[self.fx, 0, self.cx, 0], [0, self.fy, self.cy, 0], [0, 0, 1, 0]])
+        in2 = np.array([[self.fx, 0, self.cx, self.baseline], [0, self.fy, self.cy, 0], [0, 0, 1, 0]])
+        t = cv2.triangulatePoints(in1, in2, np.transpose(pts1), np.transpose(pts2))
+        wpoints = t[:3] / t[3]  # Convert to homogeneous coordinates
+    ```
+
 - **Pose Estimation**: The camera's position and orientation are estimated using the PnP (Perspective-n-Point) algorithm with RANSAC. PnP is used for its ability to estimate the pose of the camera from 3D-2D point correspondences.
+
+    **Method**:
+    - USe the 3D points obtained from the traingulation and their corresponding 2D image points.
+    - Apply the PnP algorithm to estimate the camera pose.
+    - Compute the new transformation matrix and extract the position and orientation.
+
+    ```python
+    def compute_odometry(self, pts1, pts2):
+        # Triangulation as shown above
+        _, R, t, _ = cv2.solvePnPRansac(wpoints.T, pts1, np.eye(3), np.zeros((4, 1)))
+        Rot, _ = cv2.Rodrigues(R)
+        T = np.vstack((np.hstack((Rot, t)), [0, 0, 0, 1]))
+        new = np.matmul(self.prev, T)
+        position = new[:3, 3]
+        orientation = cv2.Rodrigues(new[:3, :3])[0]
+        return position, orientation
+    ```
 
 ![Visual Odometry](path/to/visual_odometry_image.gif)
 
