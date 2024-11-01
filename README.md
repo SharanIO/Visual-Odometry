@@ -191,25 +191,27 @@ These contributions collectively provide a robust and efficient pipeline for ste
 
 ## Project Structure
 
+```
 stereo_visual_odometry
 │   CMakeLists.txt
 │   package.xml
 │
-├───calib
+├── calib
 │   │   # Calibration files and data would be here.
 │
-├───launch
+├── launch
 │   │   calibrate.launch
 │   │   depth_estimation.launch
 │   │   svo.launch
 │
-├───rviz
+├── rviz
 │   │   # RViz configuration files would be here.
 │
-└───src
+└── src
     │   calibrate.py
     │   get_depth.py
     │   svo.py
+```
 
 
 ## Datasets
