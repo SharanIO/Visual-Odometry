@@ -63,6 +63,21 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
     ```
 
 - **Feature Matching**: Features between consecutive frames are matched using the BFMatcher (Brute Force Matcher) with Hamming distance and cross-checking. BFMatcher is selected for its simplicity and effectiveness in matching binary descriptors like those produced by ORB.
+
+    **Method**:
+    - Create a BFMatcher object with Hamming distance and cross-check enabled.
+    - Match the descriptors from the current frame to the previous frame.
+    - Sort the matches based on distance and extract the matched points.
+
+    ```python
+    def track_features(self, pt1, pt2, des1, des2):
+        bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        matches = sorted(bf.match(des1, des2), key=lambda x: x.distance)
+        pts1 = np.float32([pt1[m.queryIdx] for m in matches]).reshape(-1, 1, 2)
+        pts2 = np.float32([pt2[m.trainIdx] for m in matches]).reshape(-1, 1, 2)
+        return pts1, pts2
+    ```
+
 - **Triangulation**: The 3D positions of matched features are estimated using triangulation. This step is crucial for determining the spatial coordinates of the features in the scene.
 - **Pose Estimation**: The camera's position and orientation are estimated using the PnP (Perspective-n-Point) algorithm with RANSAC. PnP is used for its ability to estimate the pose of the camera from 3D-2D point correspondences.
 
