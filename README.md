@@ -51,6 +51,7 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
 - **Feature Detection**: Key points in the images are detected using the ORB (Oriented FAST and Rotated BRIEF) algorithm. ORB is chosen for its efficiency and robustness in detecting and describing key points, making it suitable for real-time applications.
 
     **Method**:
+    
       - Convert the image to grayscale.
       - Use the ORB detector to find key points and compute their descriptors.
 
