@@ -1,0 +1,21 @@
+<launch>
+    <!-- Launch Calibration Process -->
+    <include file="$(find stereo_visual_odometry)/launch/calibrate.launch" />
+
+    <!-- Launch Depth Estimation Node -->
+    <node 
+        name="depth_estimation_node" 
+        pkg="stereo_visual_odometry" 
+        type="get_depth.py" 
+        output="screen" 
+        launch-prefix="python3 -u"  
+    />
+
+    <!-- Launch RViz with Custom Configuration -->
+    <node 
+        name="rviz" 
+        pkg="rviz" 
+        type="rviz" 
+        args="-d $(find stereo_visual_odometry)/rviz/depth.rviz" 
+    />
+</launch>

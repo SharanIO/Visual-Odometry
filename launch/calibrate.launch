@@ -1,0 +1,19 @@
+<launch>
+    <!-- Launch Configuration for Stereo Visual Odometry Calibration -->
+
+    <!-- Set the number of calibration images to use -->
+    <arg name="calib_image_num" default="30" />  <!-- Default to 5 images -->
+    <param name="calib_image_num" value="$(arg calib_image_num)" />
+
+    <!-- Node Configuration -->
+    <node 
+        name="calibration_node"         
+        pkg="stereo_visual_odometry"    
+        type="calibrate.py"        
+        output="screen"                 
+        launch-prefix="python3 -u"      
+    />
+
+    <!-- Optional: Include rosparam YAML file if needed in the future -->
+    <!-- <rosparam file="$(find stereo_visual_odometry)/config/calib_params.yaml" command="load" /> -->
+</launch>
