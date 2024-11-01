@@ -1,62 +1,7 @@
 # Stereo Visual Odometry
 
-Stereo Visual Odometry (SVO) is a computer vision project that estimates the motion of a camera through 3D space by analyzing the sequence of images from stereo camera inputs. This project is designed to be modular, efficient, and capable of working with different stereo datasets.
+Stereo Visual Odometry (SVO) is an advanced, modular computer vision project that accurately estimates camera motion through 3D space by processing sequential stereo images. This implementation uses the ROS framework to perform stereo visual odometry in real-time, taking advantage of stereo camera calibration, depth calculation, and odometry visualization in a unified pipeline. With a focus on robotics applications, this project is designed to be both flexible and efficient, compatible with various stereo datasets and capable of integrating seamlessly with the ROS ecosystem.
 
-## Table of Contents
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-- [Project Structure](#project-structure)
-- [Datasets](#datasets)
-- [Contributing](#contributing)
-- [License](#license)
+To achieve precise motion estimation, the pipeline begins with **stereo camera calibration**, calculating the intrinsic matrix and publishing it as a ROS topic. This calibration step provides a foundation for accurate depth perception, which is then calculated from the stereo images in the ROS bag and published as a dedicated ROS topic. Using the depth data, SVO is performed on the image stream, generating odometry estimations that are visualized in **RViz** alongside the ground truth odometry from the ROS bag.
 
-## About the Project
-
-This project implements a Stereo Visual Odometry pipeline using stereo image sequences to estimate the position and orientation of a moving camera over time. The goal of the project is to provide an accurate and real-time solution for visual odometry using standard stereo datasets. It serves as a building block for applications in SLAM (Simultaneous Localization and Mapping) and autonomous navigation.
-
-### Key Objectives
-- Real-time estimation of camera position and orientation.
-- Flexibility to work with various stereo camera configurations.
-- Modular and extensible architecture for testing and improving algorithms.
-
-## Features
-
-- **Feature Detection**: Detects features in stereo images using algorithms like ORB, SIFT, or SURF.
-- **Feature Matching**: Matches features between consecutive frames to estimate motion.
-- **Pose Estimation**: Calculates the camera’s position and orientation from matched features.
-- **Scale Recovery**: Uses stereo information to estimate scale in real-world measurements.
-- **Visualization**: Displays the trajectory and keyframes of the estimated motion path.
-
-## Installation
-
-### Prerequisites
-
-- Python 3.x
-- OpenCV
-- NumPy
-- Matplotlib
-- [Dataset](#datasets)
-
-### Setup
-
-1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/stereo-visual-odometry.git
-    cd stereo-visual-odometry
-    ```
-
-2. **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Usage
-
-### Running the Main Script
-
-To run the visual odometry pipeline, use the following command:
-```bash
-python main.py --dataset_path /path/to/dataset
+This project also makes extensive use of **OpenCV** tools to handle feature detection, matching, and depth calculation tasks, ensuring a streamlined integration of image processing with the ROS framework. By combining efficient algorithms with a scalable, ROS-compatible design, this SVO project represents a reliable solution for real-time visual odometry in dynamic environments, ideal for applications in autonomous navigation and SLAM.
