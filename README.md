@@ -49,7 +49,9 @@ Depth maps are generated using the disparity between stereo images. A robust con
 Implemented a feature tracking-based stereo visual odometry pipeline. The system calculates the robot's 3D position and orientation with feature detection, matching, and triangulation techniques, which are critical for continuous localization.
 
 - **Feature Detection**: Key points in the images are detected using the ORB (Oriented FAST and Rotated BRIEF) algorithm. ORB is chosen for its efficiency and robustness in detecting and describing key points, making it suitable for real-time applications.
-    Method
+    Method:
+    - Convert
+
 - **Feature Matching**: Features between consecutive frames are matched using the BFMatcher (Brute Force Matcher) with Hamming distance and cross-checking. BFMatcher is selected for its simplicity and effectiveness in matching binary descriptors like those produced by ORB.
 - **Triangulation**: The 3D positions of matched features are estimated using triangulation. This step is crucial for determining the spatial coordinates of the features in the scene.
 - **Pose Estimation**: The camera's position and orientation are estimated using the PnP (Perspective-n-Point) algorithm with RANSAC. PnP is used for its ability to estimate the pose of the camera from 3D-2D point correspondences.
