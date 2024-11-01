@@ -191,18 +191,26 @@ These contributions collectively provide a robust and efficient pipeline for ste
 
 ## Project Structure
 
-- `calib/`: Calibration files and data.
-- `launch/`: ROS launch files.
-  - `calibrate.launch`: Launch file for the camera calibration node.
-  - `depth_estimation.launch`: Launch file for the depth estimation node.
-  - `svo.launch`: Launch file for the stereo visual odometry node.
-- `rviz/`: RViz configuration files.
-- `src/`: Source code for the ROS nodes.
-  - `calibrate.py`: Node for camera calibration.
-  - `get_depth.py`: Node for depth estimation.
-  - `svo.py`: Node for stereo visual odometry.
-- `CMakeLists.txt`: CMake build configuration file.
-- `package.xml`: ROS package configuration file.
+stereo_visual_odometry
+│   CMakeLists.txt
+│   package.xml
+│
+├───calib
+│   │   # Calibration files and data would be here.
+│
+├───launch
+│   │   calibrate.launch
+│   │   depth_estimation.launch
+│   │   svo.launch
+│
+├───rviz
+│   │   # RViz configuration files would be here.
+│
+└───src
+    │   calibrate.py
+    │   get_depth.py
+    │   svo.py
+
 
 ## Datasets
 
