@@ -126,14 +126,34 @@ These contributions collectively provide a robust and efficient pipeline for ste
 
 ## Setup and Installation
 
-1. **Clone the Repository**
+1. **Ensure ROS Noetic is Installed**
+
+    Follow the ROS Noetic installation guide to install ROS Noetic on your system.
+
+2. **Create a ROS Workspace**
 
     ```bash
-    git clone https://github.com/yourusername/stereo_visual_odometry.git
-    cd stereo_visual_odometry
+    mkdir -p ~/catkin_ws/src
+    cd ~/catkin_ws/
+    catkin_make
+    source devel/setup.bash
     ```
 
-2. **Install Dependencies** Ensure that OpenCV and additional Python libraries are installed:
+3. **Clone the Repository**
+
+    ```bash
+    cd ~/catkin_ws/src
+    git clone https://github.com/yourusername/stereo_visual_odometry.git
+    ```
+
+4. **Install Dependencies using Rosdep**
+
+    ```bash
+    cd ~/catkin_ws
+    rosdep install --from-paths src --ignore-src -r -y
+    ```
+
+5. **Install Additional Packages** Esnure that OpenCV and additional Python libraries are installed:
 
     ```bash
     sudo apt install python3-pip
@@ -143,6 +163,7 @@ These contributions collectively provide a robust and efficient pipeline for ste
 3. **Build the ROS Workspace**
 
     ```bash
+    cd ~/catkin_ws
     catkin_make
     source devel/setup.bash
     ```
@@ -167,19 +188,21 @@ These contributions collectively provide a robust and efficient pipeline for ste
     roslaunch stereo_visual_odometry svo.launch
     ```
 
-## Examples
-
-- **RViz Visualization**: Visualize the depth maps and odometry estimations in RViz using the provided configuration files in the `rviz` directory.
 
 ## Project Structure
 
 - `calib/`: Calibration files and data.
 - `launch/`: ROS launch files.
+  - `calibrate.launch`: Launch file for the camera calibration node.
+  - `depth_estimation.launch`: Launch file for the depth estimation node.
+  - `svo.launch`: Launch file for the stereo visual odometry node.
 - `rviz/`: RViz configuration files.
 - `src/`: Source code for the ROS nodes.
   - `calibrate.py`: Node for camera calibration.
   - `get_depth.py`: Node for depth estimation.
   - `svo.py`: Node for stereo visual odometry.
+- `CMakeLists.txt`: CMake build configuration file.
+- `package.xml`: ROS package configuration file.
 
 ## Datasets
 
