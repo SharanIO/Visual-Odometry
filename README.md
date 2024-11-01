@@ -8,8 +8,8 @@ This project also makes extensive use of **OpenCV** tools to handle feature dete
 
 ## Table of Contents
 - [About the Project](#about-the-project)
-- [Features](#features)
-- [Installation](#installation)
+- [Technical Contributions](#technical-contributions)
+- [Setup and Installation](#setup-and-installation)
 - [Usage](#usage)
 - [Examples](#examples)
 - [Project Structure](#project-structure)
@@ -17,11 +17,38 @@ This project also makes extensive use of **OpenCV** tools to handle feature dete
 
 ## About the Project
 
-This project implements a Stereo Visual Odometry pipeline using stereo image sequences to estimate the position and orientation of a moving camera over time. The goal of the project is to provide an accurate and real-time solution for visual odometry using standard stereo datasets. It serves as a building block for applications in SLAM (Simultaneous Localization and Mapping) and autonomous navigation.
+This project represents a complete solution for stereo-based perception in robotics, using stereo visual odometry and real-time depth estimation for enhanced spatial understanding. This work has been implemented as ROS nodes, handling:
 
-## Features
+1. **Camera Calibration**: Computes intrinsic camera parameters via an asymmetric circle grid pattern.
+2. **Depth Estimation**: Real-time computation of depth maps from stereo image feeds, critical for robotic depth perception.
+3. **Stereo Visual Odometry (SVO)**: Position and orientation estimation based on feature matching in stereo images, essential for localization and navigation.
 
-- **Camera Calibration**: Calculates and publishes the intrinsic matrix as a ROS topic for accurate stereo calibration.
-- **Depth Calculation**: Computes depth from stereo images and publishes it as a ROS topic, ensuring depth data is available in real-time.
-- **Stereo Visual Odometry (SVO)**: Performs odometry on the stereo image stream from the ROS bag and visualizes both calculated and ROS-bag-provided odometry in RViz.
-- **OpenCV Integration**: Utilizes OpenCV for feature detection, matching, and depth calculation, ensuring robust image processing and compatibility with ROS.
+
+## Technical Contributions
+
+- **Development of a ROS-integrated camera calibration node**: Using an asymmetric circle grid pattern and SimpleBlobDetector in OpenCV, the node computes the camera's intrinsic matrix, crucial for precise depth estimation and odometry.
+  
+- **Depth estimation using stereo vision**: Depth maps are generated using disparity between stereo images. A robust configuration of StereoSGBM is used for improved accuracy in noisy environments.
+  
+- **Visual Odometry for 3D localization**: Implemented a feature tracking-based stereo visual odometry pipeline. The system calculates the robot's 3D position and orientation with feature detection, matching, and triangulation techniques, which are critical for continuous localization.
+
+- **ROS integration and real-time data handling**: Leveraged ROS publishers and subscribers to ensure smooth communication between nodes, demonstrating expertise in real-time data management in robotics software.
+
+
+## Setup and Installation
+
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/yourusername/stereo_visual_odometry.git
+    cd stereo_visual_odometry
+
+2. **Install Dependencies** Ensure that ROS, OpenCV, and additional Python libraries are installed:
+    ```bash
+    sudo apt install ros-noetic-desktop-full
+    pip install numpy opencv-python rospkg
+
+3. **Build the ROS Workspace**
+    ```bash
+    catkin build
+    source devel/setup.bash
+
