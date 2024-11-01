@@ -54,12 +54,12 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
       - Convert the image to grayscale.
       - Use the ORB detector to find key points and compute their descriptors.
 
-      ```python
-      def detect_features(self, img):
-        orb = cv2.ORB_create()
-        kp, des = orb.detectAndCompute(img, None)
-        return kp, des
-      ```
+        ```python
+        def detect_features(self, img):
+            orb = cv2.ORB_create()
+            kp, des = orb.detectAndCompute(img, None)
+            return kp, des
+        ```
 
 - **Feature Matching**: Features between consecutive frames are matched using the BFMatcher (Brute Force Matcher) with Hamming distance and cross-checking. BFMatcher is selected for its simplicity and effectiveness in matching binary descriptors like those produced by ORB.
 - **Triangulation**: The 3D positions of matched features are estimated using triangulation. This step is crucial for determining the spatial coordinates of the features in the scene.
