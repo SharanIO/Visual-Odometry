@@ -49,6 +49,7 @@ Depth maps are generated using the disparity between stereo images. A robust con
 Implemented a feature tracking-based stereo visual odometry pipeline. The system calculates the robot's 3D position and orientation with feature detection, matching, and triangulation techniques, which are critical for continuous localization.
 
 - **Feature Detection**: Key points in the images are detected using the ORB (Oriented FAST and Rotated BRIEF) algorithm. ORB is chosen for its efficiency and robustness in detecting and describing key points, making it suitable for real-time applications.
+
     Method:
     - Convert
 
