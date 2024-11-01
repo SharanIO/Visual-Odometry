@@ -55,6 +55,7 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
     - Convert the image to grayscale.
     - Use the ORB detector to find key points and compute their descriptors.
 
+
     ```bash
     def detect_features(self, img):
         orb = cv2.ORB_create()
