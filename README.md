@@ -81,7 +81,7 @@ Implemented a feature tracking-based stereo visual odometry pipeline. The system
 - **Triangulation**: The 3D positions of matched features are estimated using triangulation. This step is crucial for determining the spatial coordinates of the features in the scene.
 
     **Method**:
-    - USe the matched key points from the left and right images.
+    - Use the matched key points from the left and right images.
     - Apply the triangulation method to compute the 3D coordinates.
 
     ```python
