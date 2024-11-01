@@ -15,3 +15,13 @@ This project also makes extensive use of **OpenCV** tools to handle feature dete
 - [Project Structure](#project-structure)
 - [Datasets](#datasets)
 
+## About the Project
+
+This project implements a Stereo Visual Odometry pipeline using stereo image sequences to estimate the position and orientation of a moving camera over time. The goal of the project is to provide an accurate and real-time solution for visual odometry using standard stereo datasets. It serves as a building block for applications in SLAM (Simultaneous Localization and Mapping) and autonomous navigation.
+
+## Features
+
+- **Camera Calibration**: Calculates and publishes the intrinsic matrix as a ROS topic for accurate stereo calibration.
+- **Depth Calculation**: Computes depth from stereo images and publishes it as a ROS topic, ensuring depth data is available in real-time.
+- **Stereo Visual Odometry (SVO)**: Performs odometry on the stereo image stream from the ROS bag and visualizes both calculated and ROS-bag-provided odometry in RViz.
+- **OpenCV Integration**: Utilizes OpenCV for feature detection, matching, and depth calculation, ensuring robust image processing and compatibility with ROS.
