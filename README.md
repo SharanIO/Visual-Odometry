@@ -32,7 +32,7 @@ Using an asymmetric square grid pattern and SimpleBlobDetector in OpenCV, the no
 - **Asymmetric Square Grid Pattern**: This pattern is used for accurate camera calibration. The grid pattern is detected using OpenCV's SimpleBlobDetector.
 - **Intrinsic Matrix Calculation**: The intrinsic parameters of the camera, such as focal length and optical center, are calculated and published as a ROS topic.
 
-![Camera Calibration](path/to/camera_calibration_image.png)
+![Camera Calibration](temp/calibration_result.gif)
 
 ### 2. Depth Estimation using Stereo Vision
 
