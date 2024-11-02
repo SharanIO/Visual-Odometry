@@ -12,7 +12,6 @@ This project also makes extensive use of **OpenCV** tools to handle feature dete
 - [Technical Contributions](#technical-contributions)
 - [Setup and Installation](#setup-and-installation)
 - [Usage](#usage)
-- [Examples](#examples)
 - [Project Structure](#project-structure)
 - [Datasets](#datasets)
 
