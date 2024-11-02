@@ -16,6 +16,7 @@ from std_msgs.msg import String
 import rospkg
 import random
 import os
+import imageio
 
 def load_images_from_folder(folder, image_count):
     """
@@ -110,6 +111,37 @@ def calibrate_camera(objpoints, imgpoints, image_size):
     )
     return mtx, dist
 
+def create_gif_from_images(images, gif_filename='calibration_result.gif', duration=0.5):
+    """
+    Create a GIF from a sequence of images.
+
+    Parameters:
+        images (list): List of file paths for images to be included in the GIF.
+        gif_filename (str): Name of the output GIF file.
+        duration (float): Duration for each frame in the GIF, in seconds.
+    """
+    frames = []
+
+    # Read each image and append it to the frames list
+    for image_file in images:
+        img = cv2.imread(image_file)
+        if img is None:
+            rospy.logwarn(f"Failed to load image for GIF: {image_file}")
+            continue
+        frames.append(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))  # Convert BGR to RGB for proper color rendering in GIF
+
+    # Convert images to RGB and append to frames list
+    # for img in images:
+    #     frames.append(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))  # Convert BGR to RGB for proper color rendering in GIF
+
+
+    # Write frames to a GIF file
+    if frames:
+        imageio.mimsave(gif_filename, frames, format='GIF', duration=duration)
+        rospy.loginfo(f"GIF saved as: {gif_filename}")
+    else:
+        rospy.logerr("GIF creation failed: No valid frames found.")
+
 def main():
     """Main function to perform calibration and publish intrinsic matrix."""
     rospy.init_node("calib")  # Initialize the ROS node
@@ -129,6 +161,7 @@ def main():
 
     objpoints, imgpoints = [], []  # Lists to store object and image points
 
+    key_images = []
     # Process each selected image for calibration
     for image_file in image_files:
         img = cv2.imread(image_file)
@@ -140,6 +173,7 @@ def main():
 
         # Detect keypoints and draw them on the image
         keypoint_img = find_and_draw_keypoints(gray, blob_detector)
+        key_images.append(keypoint_img)
 
         # Try to find the asymmetric circle grid in the image
         ret, corners = cv2.findCirclesGrid(
@@ -153,6 +187,11 @@ def main():
         # Optional: Display the keypoint image (for debugging)
         # cv2.imshow('Keypoints', keypoint_img)
         # cv2.waitKey(1)
+
+    # Create a GIF from the selected images
+    gif_filename = os.path.join(calib_folder, 'calibration_result.gif')
+    create_gif_from_images(image_files, gif_filename)
+
 
     if objpoints and imgpoints:
         # Perform camera calibration

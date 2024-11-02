@@ -34,6 +34,7 @@ class StereoVisualOdometry:
         # ROS Publishers for odometry and markers
         self.odom_pub = rospy.Publisher('/car_1/odom', Odometry, queue_size=10)
         self.mark_pub = rospy.Publisher('/car_1/ref', Marker, queue_size=10)
+        self.path_pub = rospy.Publisher('/car_1/path', Marker, queue_size=10)
 
         # Initialize variables for storing images and pose information
         self.left = []  # Store left camera images
@@ -47,6 +48,7 @@ class StereoVisualOdometry:
         # Initialize Odometry and Marker messages
         self.odom_msg = Odometry()
         self.marker = Marker()
+        self.path_marker = Marker()
 
         # Set message headers and types
         self.odom_msg.header.frame_id = "odom"
@@ -55,10 +57,20 @@ class StereoVisualOdometry:
         self.marker.header.frame_id = "odom"
         self.marker.type = self.marker.LINE_STRIP
 
+        # Initialize path marker properties
+        self.path_marker.header.frame_id = "odom"
+        self.path_marker.type = Marker.LINE_STRIP
+        self.path_marker.scale.x = 0.05  # Line width
+        self.path_marker.color.r = 0.0
+        self.path_marker.color.g = 0.0
+        self.path_marker.color.b = 1.0  # Blue color
+        self.path_marker.color.a = 1.0  # Full opacity
+
     def intrinsic_callback(self, data):
         """
         Callback to receive and parse the intrinsic camera parameters.
         """
+        # print("Intrinsic callback triggered")
         temp = data.data
         temp1 = np.fromstring(temp, sep=' ')
         temp2 = np.reshape(temp1, (3, 3))
@@ -72,6 +84,7 @@ class StereoVisualOdometry:
         """
         Callback to update the robot's current position from odometry data.
         """
+        # print("Odometry callback triggered")
         self.ox = msgs.pose.pose.position.x
         self.oy = msgs.pose.pose.position.y
 
@@ -79,6 +92,7 @@ class StereoVisualOdometry:
         """
         Callback to receive and store the left camera image in grayscale.
         """
+        print("Left image callback triggered")
         left_img = self.bridge.compressed_imgmsg_to_cv2(data, "bgr8")
         left_gray = cv2.cvtColor(left_img, cv2.COLOR_BGR2GRAY)
         self.left.append(left_gray)
@@ -88,6 +102,8 @@ class StereoVisualOdometry:
         Callback to receive and process the right camera image.
         Also computes odometry and publishes results.
         """
+
+        print("Processing stereo images...")
         right_img = self.bridge.compressed_imgmsg_to_cv2(data, "bgr8")
         right_gray = cv2.cvtColor(right_img, cv2.COLOR_BGR2GRAY)
         self.right.append(right_gray)
@@ -122,6 +138,7 @@ class StereoVisualOdometry:
 
         # Update and publish marker data for visualization
         self.update_marker(x, y)
+        self.update_path_marker(x, y)
 
     def detect_features(self, img):
         """
@@ -156,7 +173,6 @@ class StereoVisualOdometry:
         # Solve for rotation and translation using PnP RANSAC
         _, R, t, _ = cv2.solvePnPRansac(wpoints.T, pts1, np.eye(3), np.zeros((4, 1)))
         Rot, _ = cv2.Rodrigues(R)
-
         # Compute the new transformation matrix
         T = np.vstack((np.hstack((Rot, t)), [0, 0, 0, 1]))
         new = np.matmul(self.prev, T)
@@ -182,6 +198,13 @@ class StereoVisualOdometry:
         """
         self.marker.points.append(Point(x, y, 0))
         self.mark_pub.publish(self.marker)
+
+    def update_path_marker(self, x, y):
+        """
+        Update the path marker for visualization and publish it.
+        """
+        self.path_marker.points.append(Point(x, y, 0))
+        self.path_pub.publish(self.path_marker)
 
     def run(self):
         """

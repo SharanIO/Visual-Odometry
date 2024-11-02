@@ -2,7 +2,7 @@
     <!-- Launch Configuration for Stereo Visual Odometry Calibration -->
 
     <!-- Set the number of calibration images to use -->
-    <arg name="calib_image_num" default="30" />  <!-- Default to 5 images -->
+    <arg name="calib_image_num" default="100" />  <!-- Default to 5 images -->
     <param name="calib_image_num" value="$(arg calib_image_num)" />
 
     <!-- Node Configuration -->

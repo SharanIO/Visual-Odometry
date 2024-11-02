@@ -1,41 +1,6 @@
 <launch>
-    <!-- Arguments to allow flexibility -->
-    <arg name="calib_image_num" default="10" doc="Number of images for calibration"/>
-    <arg name="rviz_config" default="$(find stereo_visual_odometry)/rviz/svo.rviz" doc="RViz config file"/>
-    <arg name="output_type" default="screen" doc="Output type (log or screen)"/>
-
-    <!-- Calibration Node -->
-    <group ns="calibration">
-        <node 
-            name="calibration_node" 
-            pkg="stereo_visual_odometry" 
-            type="calibrate.py" 
-            output="$(arg output_type)">
-            <param name="calib_image_num" value="$(arg calib_image_num)" />
-        </node>
-    </group>
-
-    <!-- Stereo Visual Odometry Node -->
-    <group ns="odometry">
-        <node 
-            name="stereo_visual_odometry_node" 
-            pkg="stereo_visual_odometry" 
-            type="svo.py" 
-            output="$(arg output_type)">
-            <!-- Example of potential topic remapping -->
-            <remap from="/car_1/camera/left/image_raw/compressed" to="/left_camera/image_raw" />
-            <remap from="/car_1/camera/right/image_raw/compressed" to="/right_camera/image_raw" />
-        </node>
-    </group>
-
-    <!-- RViz Visualization -->
-    <node 
-        name="rviz" 
-        pkg="rviz" 
-        type="rviz" 
-        args="-d $(arg rviz_config)" 
-        required="true" 
-        output="$(arg output_type)">
-        <remap from="/car_1/pointcloud" to="/visualization/pointcloud" />
-    </node>
+<node name="calibration_node" pkg="stereo_visual_odometry" type="calibrate.py" output = "screen"/>
+<param name="calib_image_num" type="int" value="10"/> 
+<node name="stereo_visual_odometry_node" pkg="stereo_visual_odometry" type="svo.py" output = "screen"/>
+<node name="rviz" pkg="rviz" type="rviz" args = "-d $(find stereo_visual_odometry)/rviz/svo.rviz"/> 
 </launch>
